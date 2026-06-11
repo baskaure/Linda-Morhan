@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linda Morhan — Créatrice UGC & contenu digital · Portfolio</title>
+<meta name="description" content="Portfolio de Linda Morhan, créatrice UGC & contenu digital pour les services et la formation en ligne. Vidéos authentiques, esthétiques et impactantes — Paris · Marbella · Bangkok.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:#F3ECDF;color:#2A241C;
+  font-family:'Jost',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+::selection{background:#2A241C;color:#F3ECDF}
+a{color:inherit;text-decoration:none}
+
+@keyframes lmMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---- shell ---- */
+.lm-shell{background:#F3ECDF;overflow:hidden}
+.lm-wrap{max-width:1280px;margin:0 auto}
+
+/* ---- nav ---- */
+.lm-nav-link{transition:color .3s}
+.lm-nav-link:hover{color:#2A241C}
+.lm-nav-cta{transition:background .3s,color .3s}
+.lm-nav-cta:hover{background:#2A241C;color:#F3ECDF}
+
+/* ---- video / reel cards ---- */
+.lm-reel{
+  position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;
+  border:1px solid rgba(42,34,28,.1);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:transform .55s cubic-bezier(.22,.7,.2,1),box-shadow .55s;
+}
+.lm-reel--corp{background:repeating-linear-gradient(135deg,#E7DAC6 0 14px,#E1D2BB 14px 28px)}
+.lm-reel--life{background:repeating-linear-gradient(135deg,#E2D3BC 0 14px,#DBCAB0 14px 28px)}
+.lm-reel:hover{transform:translateY(-7px);box-shadow:0 28px 56px -26px rgba(42,34,28,.5)}
+.lm-reel__play{
+  width:58px;height:58px;border-radius:50%;background:rgba(243,236,223,.88);
+  display:flex;align-items:center;justify-content:center;transition:transform .4s;
+}
+.lm-reel:hover .lm-reel__play{transform:scale(1.08)}
+.lm-reel__tri{width:0;height:0;border-left:14px solid #2A241C;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.lm-reel__tag{position:absolute;top:12px;left:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#5C5142}
+.lm-reel__ratio{position:absolute;top:12px;right:12px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6B5E4C;background:rgba(243,236,223,.7);padding:4px 7px;border-radius:999px}
+
+.lm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(14px,1.6vw,22px)}
+
+/* ---- CTA + footer mail ---- */
+.lm-cta-btn{transition:transform .35s,background .35s}
+.lm-cta-btn:hover{transform:translateY(-3px);background:#B06A45}
+.lm-foot-mail{transition:color .3s}
+.lm-foot-mail:hover{color:#D7A07E}
+
+/* ---- scroll reveal ---- */
+[data-reveal]{opacity:0;transform:translateY(26px);
+  transition:opacity .9s cubic-bezier(.22,.7,.2,1),transform .9s cubic-bezier(.22,.7,.2,1);
+  will-change:opacity,transform;}
+[data-reveal].is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+  .lm-marquee{animation:none}
+}
+
+/* ---- video lightbox ---- */
+[data-slot].has-video{cursor:pointer}
+[data-slot].has-video:focus-visible{outline:2px solid #B06A45;outline-offset:3px}
+.lm-modal{
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  padding:24px;background:rgba(26,21,16,.78);backdrop-filter:blur(6px);
+  opacity:0;transition:opacity .3s;
+}
+.lm-modal.is-open{display:flex;opacity:1}
+.lm-modal__frame{
+  position:relative;width:min(92vw,calc(90vh * 9 / 16));aspect-ratio:9/16;max-height:90vh;
+  border-radius:16px;overflow:hidden;background:#000;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
+}
+.lm-modal__frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lm-modal__close{
+  position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;
+  border:1px solid rgba(243,236,223,.4);background:rgba(243,236,223,.12);color:#F3ECDF;
+  font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .3s;
+}
+.lm-modal__close:hover{background:rgba(243,236,223,.25)}
+
+/* ---- testimonials: vertical scrolling columns ---- */
+@keyframes lmVScroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.lm-tcols{
+  display:flex;justify-content:center;gap:clamp(16px,1.8vw,24px);
+  margin-top:clamp(30px,4vw,48px);max-height:min(78vh,760px);overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 84%,transparent);
+  mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 84%,transparent);
+}
+.lm-tcol{flex:0 0 auto;width:clamp(270px,29vw,340px)}
+.lm-tcol__track{display:flex;flex-direction:column;gap:clamp(16px,1.8vw,24px);will-change:transform;animation:lmVScroll linear infinite}
+.lm-tcard{
+  background:#F3ECDF;border:1px solid rgba(42,34,28,.12);border-radius:26px;
+  padding:clamp(24px,2.2vw,34px);box-shadow:0 18px 44px -30px rgba(42,34,28,.5);
+}
+.lm-tcard__text{margin:0;font-size:clamp(14px,1.45vw,16px);line-height:1.55;color:#3A3026;text-wrap:pretty}
+.lm-tcard__meta{display:flex;align-items:center;gap:12px;margin-top:22px}
+.lm-tcard__avatar{
+  width:44px;height:44px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  background:#E2D3BC;color:#6B4A33;border:1px solid rgba(42,34,28,.12);
+  font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;
+}
+.lm-tcard__name{font-weight:500;letter-spacing:-.01em;line-height:1.25;color:#2A241C}
+.lm-tcard__role{font-size:11px;line-height:1.4;color:#8A7B64;text-transform:uppercase;letter-spacing:.12em;margin-top:2px}
+@media (max-width:1024px){.lm-tcol--3{display:none}}
+@media (max-width:768px){.lm-tcol--2{display:none}}
+@media (prefers-reduced-motion:reduce){.lm-tcol__track{animation:none}}
+</style>
+</head>
+
+<body>
+<div class="lm-shell">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;backdrop-filter:saturate(120%) blur(8px);background:rgba(243,236,223,.72);border-bottom:1px solid rgba(42,34,28,.1);">
+    <div class="lm-wrap" style="padding:16px clamp(20px,5vw,80px);display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#top" style="font-family:'Bodoni Moda',serif;font-size:20px;letter-spacing:.04em;">Linda <span style="font-style:italic;">Morhan</span></a>
+      <nav style="display:flex;align-items:center;gap:clamp(14px,2.4vw,34px);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#5C5142;">
+        <a class="lm-nav-link" href="#about">Qui je suis</a>
+        <a class="lm-nav-link" href="#portfolio">Portfolio</a>
+        <a class="lm-nav-link" href="#avis">Avis</a>
+        <a class="lm-nav-cta" href="#contact" style="display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid rgba(42,34,28,.35);border-radius:999px;color:#2A241C;">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="lm-wrap" style="padding:clamp(40px,7vw,86px) clamp(20px,5vw,80px) clamp(48px,7vw,90px);">
+    <div data-reveal style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#8A7B64;">
+      <span>UGC Creator</span>
+      <span style="display:flex;align-items:center;gap:10px;"><span style="width:34px;height:1px;background:#C2B095;display:inline-block;"></span>Portfolio — 2026</span>
+    </div>
+
+    <div data-reveal style="margin-top:clamp(26px,4vw,52px);">
+      <p style="margin:0 0 18px;font-size:clamp(15px,1.5vw,19px);letter-spacing:.02em;color:#6B5E4C;max-width:34ch;">Créatrice UGC &amp; contenu digital pour les services et la formation en ligne.</p>
+      <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;line-height:.86;letter-spacing:-.01em;font-size:clamp(64px,15vw,232px);">Linda<br><span style="font-style:italic;font-weight:400;">Morhan</span></h1>
+      <div style="margin-top:clamp(24px,3.5vw,40px);padding-top:clamp(22px,3vw,32px);border-top:1px solid rgba(42,34,28,.16);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#5C5142;">
+          <span>Paris</span><span style="width:5px;height:5px;border-radius:50%;background:#B06A45;"></span>
+          <span>Marbella</span><span style="width:5px;height:5px;border-radius:50%;background:#B06A45;"></span>
+          <span>Bangkok</span>
+        </div>
+        <p style="margin:0;max-width:30ch;font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(16px,1.8vw,22px);line-height:1.3;color:#3A3026;">Un storytelling pensé pour la conversion et l'image de marque.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUI JE SUIS -->
+  <section id="about" style="background:#ECE0CE;border-top:1px solid rgba(42,34,28,.08);border-bottom:1px solid rgba(42,34,28,.08);">
+    <div class="lm-wrap" style="padding:clamp(56px,8vw,120px) clamp(20px,5vw,80px);display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(32px,6vw,80px);align-items:start;">
+      <div data-reveal style="position:relative;">
+        <div data-slot="about" aria-label="Lire la vidéo de présentation" style="position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#E2D3BC 0 16px,#DBCAB0 16px 32px);border:1px solid rgba(42,34,28,.12);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -36px rgba(42,34,28,.45);">
+          <div style="width:66px;height:66px;border-radius:50%;background:rgba(243,236,223,.9);display:flex;align-items:center;justify-content:center;">
+            <div style="width:0;height:0;border-left:16px solid #2A241C;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></div>
+          </div>
+          <span style="position:absolute;left:16px;bottom:16px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#5C5142;">Qui je suis</span>
+        </div>
+      </div>
+
+      <div>
+        <p data-reveal style="margin:0 0 6px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Qui je suis</p>
+        <h2 data-reveal style="margin:0 0 clamp(22px,3vw,40px);font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.02;font-size:clamp(34px,4.6vw,62px);">Des contenus qui <span style="font-style:italic;">respirent</span> et inspirent.</h2>
+        <ul style="list-style:none;margin:0;padding:0;">
+          <li data-reveal data-d="0" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">01</span>
+            <span style="font-size:clamp(16px,1.7vw,21px);line-height:1.4;color:#3A3026;text-wrap:pretty;">Créatrice UGC &amp; contenu digital pour les services et la formation en ligne.</span>
+          </li>
+          <li data-reveal data-d="1" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">02</span>
+            <span style="font-size:clamp(16px,1.7vw,21px);line-height:1.4;color:#3A3026;text-wrap:pretty;">Univers : voyage, expat, immobilier &amp; apps.</span>
+          </li>
+          <li data-reveal data-d="2" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">03</span>
+            <span style="font-size:clamp(16px,1.7vw,21px);line-height:1.4;color:#3A3026;text-wrap:pretty;">Des vidéos authentiques, esthétiques et impactantes.</span>
+          </li>
+          <li data-reveal data-d="3" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">04</span>
+            <span style="font-size:clamp(16px,1.7vw,21px);line-height:1.4;color:#3A3026;text-wrap:pretty;">Des contenus qui respirent et inspirent.</span>
+          </li>
+          <li data-reveal data-d="4" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">05</span>
+            <span style="font-size:clamp(16px,1.7vw,21px);line-height:1.4;color:#3A3026;text-wrap:pretty;">Un storytelling pensé pour la conversion et l’image de marque.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENAIRES -->
+  <section style="padding:clamp(40px,5vw,68px) 0;">
+    <p style="text-align:center;margin:0 0 clamp(24px,3vw,36px);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Ils m'ont fait confiance</p>
+    <div style="position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);">
+      <div class="lm-marquee" style="display:flex;width:max-content;align-items:center;gap:clamp(40px,6vw,90px);animation:lmMarquee 32s linear infinite;">
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">JOÏSTA</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Dr. Herma</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">CollaVie</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">MindDay</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Scale Vision</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">HUMBLE+</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Matera</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Betty Marbella</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">SAMARA.G</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">DI$LE</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Hôtel Sapin</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Inspibe</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">HostnFly</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Günaydın Marbella</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">CertiDeal</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Luveon</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">JustFocus Académie</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">eBuyClub</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">F&amp;F Coffee</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Élaura</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Lymph</span>
+        <span style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">DiscoBus Paris</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">JOÏSTA</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Dr. Herma</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">CollaVie</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">MindDay</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Scale Vision</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">HUMBLE+</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Matera</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Betty Marbella</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">SAMARA.G</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">DI$LE</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Hôtel Sapin</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Inspibe</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">HostnFly</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Günaydın Marbella</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">CertiDeal</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Luveon</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">JustFocus Académie</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">eBuyClub</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">F&amp;F Coffee</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Élaura</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">Lymph</span>
+        <span aria-hidden="true" style="font-size:clamp(15px,1.5vw,19px);letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#6B5E4C;white-space:nowrap;">DiscoBus Paris</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="lm-wrap" style="padding:clamp(32px,4vw,56px) clamp(20px,5vw,80px) clamp(20px,3vw,40px);">
+    <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div>
+        <p style="margin:0 0 8px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Le portfolio</p>
+        <h2 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;line-height:.95;font-size:clamp(40px,6vw,86px);">Mes <span style="font-style:italic;">vidéos</span></h2>
+      </div>
+      <p style="margin:0;max-width:34ch;font-size:15px;line-height:1.5;color:#6B5E4C;">Vidéos authentiques, esthétiques et impactantes — un storytelling pensé pour la conversion et l'image de marque.</p>
+    </div>
+  </section>
+
+  <!-- BLOC 1 : CORPORATE -->
+  <section class="lm-wrap" style="padding:clamp(24px,3vw,40px) clamp(20px,5vw,80px);">
+    <div data-reveal style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(42,34,28,.16);margin-bottom:clamp(20px,3vw,34px);">
+      <div style="display:flex;align-items:baseline;gap:18px;">
+        <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">01</span>
+        <div>
+          <h3 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(24px,3vw,38px);">Corporate &amp; Marques</h3>
+          <p style="margin:6px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8A7B64;">Type de vidéos : Pro · Podcast · Scénario</p>
+        </div>
+      </div>
+      <span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5C5142;">4 vidéos</span>
+    </div>
+    <div class="lm-grid">
+      <div data-slot="corpA1" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="0"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 01</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpA2" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="1"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 02</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpA3" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="2"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 03</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpA4" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="3"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 04</span><span class="lm-reel__ratio">9:16</span></div>
+    </div>
+  </section>
+
+  <!-- BLOC 2 : CORPORATE -->
+  <section class="lm-wrap" style="padding:clamp(24px,3vw,40px) clamp(20px,5vw,80px);">
+    <div data-reveal style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(42,34,28,.16);margin-bottom:clamp(20px,3vw,34px);">
+      <div style="display:flex;align-items:baseline;gap:18px;">
+        <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">02</span>
+        <div>
+          <h3 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(24px,3vw,38px);">Corporate &amp; Marques</h3>
+          <p style="margin:6px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8A7B64;">Type de vidéos : Pro · Podcast · Scénario</p>
+        </div>
+      </div>
+      <span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5C5142;">4 vidéos</span>
+    </div>
+    <div class="lm-grid">
+      <div data-slot="corpB1" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="0"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 01</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpB2" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="1"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 02</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpB3" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="2"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 03</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="corpB4" aria-label="Lire la vidéo" class="lm-reel lm-reel--corp" data-reveal data-d="3"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 04</span><span class="lm-reel__ratio">9:16</span></div>
+    </div>
+  </section>
+
+  <!-- BLOC 3 : LIFESTYLE diana -->
+  <section class="lm-wrap" style="padding:clamp(24px,3vw,40px) clamp(20px,5vw,80px);">
+    <div data-reveal style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(42,34,28,.16);margin-bottom:clamp(20px,3vw,34px);">
+      <div style="display:flex;align-items:baseline;gap:18px;">
+        <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">03</span>
+        <div>
+          <h3 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(24px,3vw,38px);">Lifestyle</h3>
+          <p style="margin:6px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8A7B64;">@diana.aesthetic.lab — Pro · Podcast · Scénario</p>
+        </div>
+      </div>
+      <span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5C5142;">4 vidéos</span>
+    </div>
+    <div class="lm-grid">
+      <div data-slot="lifeA1" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="0"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 01</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="lifeA2" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="1"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 02</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="lifeA3" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="2"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 03</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="lifeA4" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="3"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 04</span><span class="lm-reel__ratio">9:16</span></div>
+    </div>
+  </section>
+
+  <!-- BLOC 4 : LIFESTYLE -->
+  <section class="lm-wrap" style="padding:clamp(24px,3vw,40px) clamp(20px,5vw,80px) clamp(40px,6vw,80px);">
+    <div data-reveal style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(42,34,28,.16);margin-bottom:clamp(20px,3vw,34px);">
+      <div style="display:flex;align-items:baseline;gap:18px;">
+        <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">04</span>
+        <div>
+          <h3 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(24px,3vw,38px);">Lifestyle</h3>
+          <p style="margin:6px 0 0;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8A7B64;">Type de vidéos : Pro · Podcast · Scénario</p>
+        </div>
+      </div>
+      <span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5C5142;">2 vidéos</span>
+    </div>
+    <div class="lm-grid" style="max-width:620px;">
+      <div data-slot="lifeB1" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="0"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 01</span><span class="lm-reel__ratio">9:16</span></div>
+      <div data-slot="lifeB2" aria-label="Lire la vidéo" class="lm-reel lm-reel--life" data-reveal data-d="1"><div class="lm-reel__play"><div class="lm-reel__tri"></div></div><span class="lm-reel__tag">Reel 02</span><span class="lm-reel__ratio">9:16</span></div>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section id="avis" style="background:#ECE0CE;border-top:1px solid rgba(42,34,28,.08);">
+    <div class="lm-wrap" style="padding:clamp(56px,8vw,110px) clamp(20px,5vw,80px);">
+      <p data-reveal style="margin:0 0 8px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Les avis</p>
+      <h2 data-reveal style="margin:0 0 clamp(34px,5vw,60px);font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(34px,4.6vw,62px);">Ce qu'ils en <span style="font-style:italic;">disent</span>.</h2>
+      <div class="lm-tcols" data-reveal>
+        <div class="lm-tcol" aria-hidden="false"><div class="lm-tcol__track" style="animation-duration:15s"><div class="lm-tcard"><p class="lm-tcard__text">Après plus de 30 demandes de contact pour des créations de contenus UGC, Linda a retenu mon attention de par son image et ses contenus de qualité. J'ai eu dès le début un très bon feeling : elle a su capter mes besoins et j'ai vraiment apprécié notre collaboration de A à Z, jusqu'à la livraison. Je suis très satisfaite de cette première mission et j'espère renouveler l'expérience.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">E</span><div><div class="lm-tcard__name">Elsa</div><div class="lm-tcard__role">Fondatrice d'Élaura</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Très satisfait du travail de Linda. Professionnelle et super réactive ! Je recommande vivement 👌</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">L</span><div><div class="lm-tcard__name">Luma</div><div class="lm-tcard__role">Kahel · ★★★★★ 5,0</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Merci Linda pour ton travail ! Tout est respecté : le sujet, le script, les délais — magnifique ! La qualité des vidéos est excellente : image, son et couleurs déjà retouchés. Les différents plans permettent de « mixer » nos vidéos pour créer plusieurs hooks et CTA, et A/B tester la vidéo principale. N'hésitez plus, vous ne serez pas déçu ! Linda est très sympathique et réactive : nous recommandons à 100 %.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">O</span><div><div class="lm-tcard__name">Océane &amp; Philippe</div><div class="lm-tcard__role">Fondateurs de Lymph App</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Un immense merci à Linda ❤️ Elle est venue au salon réaliser une vidéo en tant qu'UGC Creator et, honnêtement… elle s'est impliquée à 100 %, avec le cœur, le sourire et une énergie incroyable. On sent tout de suite qu'elle le fait par passion. J'ai adoré travailler avec elle : son professionnalisme, sa gentillesse et son investissement m'ont énormément touchée. Pour moi, Linda est tout simplement la meilleure — je la recommande 100 fois sans hésiter !</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">S</span><div><div class="lm-tcard__name">Samara</div><div class="lm-tcard__role">SAMARA.G</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Après plus de 30 demandes de contact pour des créations de contenus UGC, Linda a retenu mon attention de par son image et ses contenus de qualité. J'ai eu dès le début un très bon feeling : elle a su capter mes besoins et j'ai vraiment apprécié notre collaboration de A à Z, jusqu'à la livraison. Je suis très satisfaite de cette première mission et j'espère renouveler l'expérience.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">E</span><div><div class="lm-tcard__name">Elsa</div><div class="lm-tcard__role">Fondatrice d'Élaura</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Très satisfait du travail de Linda. Professionnelle et super réactive ! Je recommande vivement 👌</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">L</span><div><div class="lm-tcard__name">Luma</div><div class="lm-tcard__role">Kahel · ★★★★★ 5,0</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Merci Linda pour ton travail ! Tout est respecté : le sujet, le script, les délais — magnifique ! La qualité des vidéos est excellente : image, son et couleurs déjà retouchés. Les différents plans permettent de « mixer » nos vidéos pour créer plusieurs hooks et CTA, et A/B tester la vidéo principale. N'hésitez plus, vous ne serez pas déçu ! Linda est très sympathique et réactive : nous recommandons à 100 %.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">O</span><div><div class="lm-tcard__name">Océane &amp; Philippe</div><div class="lm-tcard__role">Fondateurs de Lymph App</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Un immense merci à Linda ❤️ Elle est venue au salon réaliser une vidéo en tant qu'UGC Creator et, honnêtement… elle s'est impliquée à 100 %, avec le cœur, le sourire et une énergie incroyable. On sent tout de suite qu'elle le fait par passion. J'ai adoré travailler avec elle : son professionnalisme, sa gentillesse et son investissement m'ont énormément touchée. Pour moi, Linda est tout simplement la meilleure — je la recommande 100 fois sans hésiter !</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">S</span><div><div class="lm-tcard__name">Samara</div><div class="lm-tcard__role">SAMARA.G</div></div></div></div></div></div>
+        <div class="lm-tcol lm-tcol--2" aria-hidden="false"><div class="lm-tcol__track" style="animation-duration:19s"><div class="lm-tcard"><p class="lm-tcard__text">Bonsoir Linda, je voulais te remercier pour ton travail effectué avec beaucoup de professionnalisme. La vidéo et le contenu sont superbes, au plaisir de retravailler avec toi. Merci pour tout.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">M</span><div><div class="lm-tcard__name">Marlène</div><div class="lm-tcard__role">F&amp;F Coffee Banús</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Salut Linda, j'attendais 24 h pour t'envoyer un message de remerciement ! La vidéo est top, elle a été republiée et partagée plusieurs fois. Hâte que le beau temps revienne pour organiser un nouveau shooting avec des nouveautés. On se tient au courant, forsuuuure !</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">B</span><div><div class="lm-tcard__name">Betty</div><div class="lm-tcard__role">Betty Marbella</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Ha sido un placer colaborar con Linda en el evento Henna &amp; Brunch de Inspibe. Es muy profesional, cercana y fácil de trabajar, siempre con buena actitud y mucha flexibilidad. Supo captar la esencia del evento de forma natural y cuidada, adaptándose a todo con mucha soltura. Su trabajo transmite autenticidad y compromiso ; sin duda la recomendaría para cualquier proyecto o evento.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">I</span><div><div class="lm-tcard__name">Inspibe</div><div class="lm-tcard__role">Bridal Henna &amp; Decor</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Bonsoir Linda, je voulais te remercier pour ton travail effectué avec beaucoup de professionnalisme. La vidéo et le contenu sont superbes, au plaisir de retravailler avec toi. Merci pour tout.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">M</span><div><div class="lm-tcard__name">Marlène</div><div class="lm-tcard__role">F&amp;F Coffee Banús</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Salut Linda, j'attendais 24 h pour t'envoyer un message de remerciement ! La vidéo est top, elle a été republiée et partagée plusieurs fois. Hâte que le beau temps revienne pour organiser un nouveau shooting avec des nouveautés. On se tient au courant, forsuuuure !</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">B</span><div><div class="lm-tcard__name">Betty</div><div class="lm-tcard__role">Betty Marbella</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Ha sido un placer colaborar con Linda en el evento Henna &amp; Brunch de Inspibe. Es muy profesional, cercana y fácil de trabajar, siempre con buena actitud y mucha flexibilidad. Supo captar la esencia del evento de forma natural y cuidada, adaptándose a todo con mucha soltura. Su trabajo transmite autenticidad y compromiso ; sin duda la recomendaría para cualquier proyecto o evento.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">I</span><div><div class="lm-tcard__name">Inspibe</div><div class="lm-tcard__role">Bridal Henna &amp; Decor</div></div></div></div></div></div>
+        <div class="lm-tcol lm-tcol--3" aria-hidden="false"><div class="lm-tcol__track" style="animation-duration:17s"><div class="lm-tcard"><p class="lm-tcard__text">Gracias, Linda, por el hermoso video y por la experiencia tan agradable. Un trabajo muy profesional, un ambiente cálido y un resultado impecable. Totalmente recomendable. 🌟</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">D</span><div><div class="lm-tcard__name">@diana.aesthetic.lab</div><div class="lm-tcard__role">Lifestyle</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Me gustaría agradecerte por tu excelente trabajo. ¡Muchas gracias, nos encantó! ❤️🥰🤝</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">G</span><div><div class="lm-tcard__name">Günaydın</div><div class="lm-tcard__role">Günaydın Marbella</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Linda est une créatrice très réactive qui a parfaitement compris nos consignes dès le départ. Elle a une approche ingénieuse des briefs et de la création de contenu, tout en respectant scrupuleusement l'image de marque et les messages que nous souhaitions communiquer. Ce fut un plaisir de travailler avec elle.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">C</span><div><div class="lm-tcard__name">CertiDeal</div><div class="lm-tcard__role">Marque partenaire</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Gracias, Linda, por el hermoso video y por la experiencia tan agradable. Un trabajo muy profesional, un ambiente cálido y un resultado impecable. Totalmente recomendable. 🌟</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">D</span><div><div class="lm-tcard__name">@diana.aesthetic.lab</div><div class="lm-tcard__role">Lifestyle</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Me gustaría agradecerte por tu excelente trabajo. ¡Muchas gracias, nos encantó! ❤️🥰🤝</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">G</span><div><div class="lm-tcard__name">Günaydın</div><div class="lm-tcard__role">Günaydın Marbella</div></div></div></div><div class="lm-tcard"><p class="lm-tcard__text">Linda est une créatrice très réactive qui a parfaitement compris nos consignes dès le départ. Elle a une approche ingénieuse des briefs et de la création de contenu, tout en respectant scrupuleusement l'image de marque et les messages que nous souhaitions communiquer. Ce fut un plaisir de travailler avec elle.</p><div class="lm-tcard__meta"><span class="lm-tcard__avatar" aria-hidden="true">C</span><div><div class="lm-tcard__name">CertiDeal</div><div class="lm-tcard__role">Marque partenaire</div></div></div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="lm-wrap" style="padding:clamp(70px,11vw,170px) clamp(20px,5vw,80px);text-align:center;">
+    <p data-reveal style="margin:0 0 clamp(18px,2.4vw,30px);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Travaillons ensemble</p>
+    <h2 data-reveal style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.0;font-size:clamp(38px,7vw,108px);">Prêt à donner vie<br>à <span style="font-style:italic;">vos projets</span> ?</h2>
+    <p data-reveal style="margin:clamp(22px,3vw,38px) auto 0;max-width:30ch;font-size:clamp(17px,1.8vw,22px);line-height:1.4;color:#6B5E4C;">Créons un contenu qui dynamise votre image.</p>
+    <a class="lm-cta-btn" data-reveal data-contact-link href="#" style="display:inline-flex;align-items:center;gap:12px;margin-top:clamp(28px,4vw,46px);padding:16px 30px;border-radius:999px;background:#2A241C;color:#F3ECDF;font-size:13px;letter-spacing:.16em;text-transform:uppercase;">
+      <span data-contact-text>lindamorhan.pro [at] gmail.com</span>
+      <span style="display:inline-block;width:7px;height:7px;border-right:1.5px solid currentColor;border-top:1.5px solid currentColor;transform:rotate(45deg);"></span>
+    </a>
+  </section>
+
+  <!-- FOOTER MERCI -->
+  <footer style="background:#2A241C;color:#EFE6D6;">
+    <div class="lm-wrap" style="padding:clamp(56px,9vw,130px) clamp(20px,5vw,80px) clamp(34px,4vw,56px);">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;">
+        <h2 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;font-size:clamp(72px,18vw,260px);line-height:.82;letter-spacing:-.01em;">Merci<span style="color:#B06A45;font-style:italic;"> !</span></h2>
+        <div style="display:flex;flex-direction:column;gap:10px;text-align:right;">
+          <span style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#9C8E78;">UGC Creator — Portfolio</span>
+          <a class="lm-foot-mail" data-contact-link href="#" style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(18px,2vw,26px);"><span data-contact-text>lindamorhan.pro [at] gmail.com</span></a>
+        </div>
+      </div>
+      <div style="margin-top:clamp(34px,5vw,64px);padding-top:22px;border-top:1px solid rgba(239,230,214,.16);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9C8E78;">
+        <span>Linda Morhan</span>
+        <span>Paris · Marbella · Bangkok</span>
+        <span>© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- VIDEO LIGHTBOX -->
+<div class="lm-modal" id="lmModal" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+  <button class="lm-modal__close" type="button" aria-label="Fermer">&times;</button>
+  <div class="lm-modal__frame"></div>
+</div>
+
+<script>
+/* =====================================================================
+   VIDÉOS — colle ici l'ID ou le lien de partage Google Drive de chaque
+   vidéo. Laisse vide ("") pour garder l'emplacement en placeholder.
+   ⚠️ Chaque vidéo doit être partagée en « Tous les utilisateurs disposant
+   du lien » dans Google Drive, sinon elle ne s'affichera pas.
+   ===================================================================== */
+var VIDEOS = {
+  about:  'https://drive.google.com/file/d/1Y8zOhqKpfAwdR5hiMazyWkbSsMbBP1VP/view?usp=sharing',
+
+  // Bloc 01 — Corporate & Marques
+  corpA1: 'https://drive.google.com/file/d/1I4BulNnq6HJ1lFg9VqNAji3JCD6MoXaH/view?usp=sharing',
+  corpA2: 'https://drive.google.com/file/d/1pIv9N_Q7OzBeA4esiOkM_b5-zY01AUad/view?usp=sharing',
+  corpA3: 'https://drive.google.com/file/d/1X_lBKA5Y-IuhqTd4qT-jwyn4U5bggcyi/view?usp=sharing',
+  corpA4: 'https://drive.google.com/file/d/14pWD5zy9NTps63QKfNXcFN-2ESt66Pmx/view?usp=sharing',
+
+  // Bloc 02 — Corporate & Marques
+  corpB1: 'https://drive.google.com/file/d/1GFBLjaXKqzAcLAb1nct8DeHHMaZxzed1/view?usp=sharing',
+  corpB2: '', // ⏳ à venir
+  corpB3: 'https://drive.google.com/file/d/1aih7nLr_KE8IW30aSDHRCDG3IOjDJ4eQ/view?usp=sharing',
+  corpB4: 'https://drive.google.com/file/d/1BXpA298O7RymmOfEYEoemBnOQBUEpgZ9/view?usp=sharing',
+
+  // Bloc 03 — Lifestyle (@diana.aesthetic.lab)
+  lifeA1: 'https://drive.google.com/file/d/1kyKbI4VhTPwTrCY8yVDTGbm6d1HvDqwf/view?usp=sharing',
+  lifeA2: 'https://drive.google.com/file/d/1TF-0dUdlvnYJgVs05HSuE8TiIWlGeHE1/view?usp=sharing',
+  lifeA3: 'https://drive.google.com/file/d/1Io0k1vaFK1dPXDJ2og72gF8aHDw8UQcr/view?usp=sharing',
+  lifeA4: 'https://drive.google.com/file/d/1rQb-7XtwmiAwCjNDlFWoqEqS4l3E--go/view?usp=sharing',
+
+  // Bloc 04 — Lifestyle
+  lifeB1: 'https://drive.google.com/file/d/189ITEJVp2X3Ot4XIkJeSbhIv5fJ2wM5V/view?usp=sharing',
+  lifeB2: 'https://drive.google.com/file/d/1J6UdurdwlA-o4rPfJeXR3-fcgEXXPWf-/view?usp=sharing'
+};
+
+(function () {
+  // Accepts a raw Drive ID or any Drive share URL and returns the file ID.
+  function driveId(v) {
+    if (!v) return '';
+    var m = String(v).match(/[-\w]{25,}/);
+    return m ? m[0] : '';
+  }
+
+  var modal = document.getElementById('lmModal');
+  var frame = modal.querySelector('.lm-modal__frame');
+  var closeBtn = modal.querySelector('.lm-modal__close');
+  var lastFocus = null;
+
+  function openModal(id, trigger) {
+    lastFocus = trigger || null;
+    frame.insertAdjacentHTML('afterbegin',
+      '<iframe src="https://drive.google.com/file/d/' + id + '/preview" ' +
+      'allow="autoplay; fullscreen" allowfullscreen></iframe>');
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    var f = frame.querySelector('iframe');
+    if (f) f.remove(); // stop playback
+    if (lastFocus) lastFocus.focus();
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  // Wire each configured slot to its card.
+  Object.keys(VIDEOS).forEach(function (slot) {
+    var id = driveId(VIDEOS[slot]);
+    if (!id) return;
+    var el = document.querySelector('[data-slot="' + slot + '"]');
+    if (!el) return;
+    el.classList.add('has-video');
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('click', function () { openModal(id, el); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(id, el); }
+    });
+  });
+})();
+
+(function () {
+  // Email assembled at runtime (anti-spam), then injected into every contact link.
+  var email = ['lindamorhan.pro', 'gmail.com'].join('@');
+  document.querySelectorAll('[data-contact-link]').forEach(function (a) {
+    a.setAttribute('href', 'mailto:' + email);
+    var label = a.querySelector('[data-contact-text]');
+    if (label) label.textContent = email;
+  });
+
+  // Soft fade-up on scroll.
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  if (!els.length) return;
+  if (reduce || !('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      var d = Number(el.getAttribute('data-d') || 0);
+      el.style.transitionDelay = (d * 80) + 'ms';
+      el.classList.add('is-in');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
