@@ -52,7 +52,8 @@ a{color:inherit;text-decoration:none}
 .lm-reel__tag{position:absolute;top:12px;left:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#5C5142}
 .lm-reel__ratio{position:absolute;top:12px;right:12px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6B5E4C;background:rgba(243,236,223,.7);padding:4px 7px;border-radius:999px}
 
-.lm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:clamp(14px,1.6vw,22px)}
+.lm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:clamp(14px,1.6vw,22px)}
+@media (max-width:520px){.lm-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ---- CTA + footer mail ---- */
 .lm-cta-btn{transition:transform .35s,background .35s}
@@ -119,6 +120,32 @@ a{color:inherit;text-decoration:none}
 @media (max-width:1024px){.lm-tcol--3{display:none}}
 @media (max-width:768px){.lm-tcol--2{display:none}}
 @media (prefers-reduced-motion:reduce){.lm-tcol__track{animation:none}}
+
+/* ---- hero masthead + scroll cue ---- */
+.lm-meta-label{margin:0 0 8px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#9A8A70}
+.lm-meta-value{margin:0;font-size:clamp(14px,1.4vw,16px);line-height:1.45;color:#3A3026}
+.lm-scroll{transition:color .3s}
+.lm-scroll:hover{color:#2A241C}
+.lm-scroll__line{position:relative;display:inline-block;width:54px;height:1px;background:rgba(42,34,28,.3);overflow:hidden}
+.lm-scroll__line::after{content:"";position:absolute;inset:0 auto 0 0;width:42%;background:#B06A45;animation:lmScrollSlide 2.4s ease-in-out infinite}
+@keyframes lmScrollSlide{0%{transform:translateX(-110%)}60%,100%{transform:translateX(250%)}}
+@media (prefers-reduced-motion:reduce){.lm-scroll__line::after{animation:none}}
+
+/* ---- responsive ---- */
+/* "Qui je suis" : stack the video + text on tablet/mobile */
+@media (max-width:860px){
+  .lm-about-grid{grid-template-columns:1fr !important}
+  .lm-about-media{max-width:440px;margin:0 auto}
+}
+/* Nav : keep logo + Contact only on small screens (avoid overflow) */
+@media (max-width:600px){
+  .lm-nav-link{display:none}
+}
+/* Avis columns : tighten card padding on small screens */
+@media (max-width:600px){
+  .lm-tcard{padding:24px}
+  .lm-tcol{width:min(86vw,330px)}
+}
 </style>
 </head>
 
@@ -145,24 +172,42 @@ a{color:inherit;text-decoration:none}
       <span style="display:flex;align-items:center;gap:10px;"><span style="width:34px;height:1px;background:#C2B095;display:inline-block;"></span>Portfolio — 2026</span>
     </div>
 
-    <div data-reveal style="margin-top:clamp(26px,4vw,52px);">
-      <p style="margin:0 0 18px;font-size:clamp(15px,1.5vw,19px);letter-spacing:.02em;color:#6B5E4C;max-width:34ch;">Créatrice UGC &amp; contenu digital pour les services et la formation en ligne.</p>
-      <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:500;line-height:.86;letter-spacing:-.01em;font-size:clamp(64px,15vw,232px);">Linda<br><span style="font-style:italic;font-weight:400;">Morhan</span></h1>
-      <div style="margin-top:clamp(24px,3.5vw,40px);padding-top:clamp(22px,3vw,32px);border-top:1px solid rgba(42,34,28,.16);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#5C5142;">
-          <span>Paris</span><span style="width:5px;height:5px;border-radius:50%;background:#B06A45;"></span>
-          <span>Marbella</span><span style="width:5px;height:5px;border-radius:50%;background:#B06A45;"></span>
-          <span>Bangkok</span>
-        </div>
-        <p style="margin:0;max-width:30ch;font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(16px,1.8vw,22px);line-height:1.3;color:#3A3026;">Un storytelling pensé pour la conversion et l'image de marque.</p>
+    <p data-reveal style="margin:clamp(28px,5vw,58px) 0 0;font-size:clamp(16px,1.7vw,21px);line-height:1.5;letter-spacing:.01em;color:#6B5E4C;max-width:42ch;">Créatrice <span style="font-family:'Bodoni Moda',serif;font-style:italic;color:#3A3026;">UGC</span> &amp; contenu digital pour les services et la formation en ligne.</p>
+
+    <h1 data-reveal style="margin:clamp(10px,1.4vw,18px) 0 0;font-family:'Bodoni Moda',serif;font-weight:500;line-height:.84;letter-spacing:-.015em;font-size:clamp(66px,15.5vw,236px);">Linda<br><span style="font-style:italic;font-weight:400;">Morhan</span></h1>
+
+    <div data-reveal style="margin-top:clamp(30px,4vw,56px);padding-top:clamp(22px,3vw,34px);border-top:1px solid rgba(42,34,28,.18);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:clamp(22px,3vw,44px);">
+      <div>
+        <p class="lm-meta-label">Basée entre</p>
+        <p class="lm-meta-value">Paris · Marbella · Bangkok</p>
+      </div>
+      <div>
+        <p class="lm-meta-label">Univers</p>
+        <p class="lm-meta-value">Voyage · Expat · Immobilier · Apps</p>
+      </div>
+      <div>
+        <p class="lm-meta-label">Approche</p>
+        <p class="lm-meta-value">Authentique · Esthétique · Impactant</p>
+      </div>
+      <div>
+        <p class="lm-meta-label">Signature</p>
+        <p class="lm-meta-value" style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:clamp(15px,1.5vw,18px);">Un storytelling pensé pour la conversion.</p>
       </div>
     </div>
+
+    <a data-reveal href="#about" class="lm-scroll" style="margin-top:clamp(34px,5vw,62px);display:inline-flex;align-items:center;gap:13px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#8A7B64;">
+      <span class="lm-scroll__line"></span>
+      Découvrir le portfolio
+    </a>
   </section>
 
   <!-- QUI JE SUIS -->
   <section id="about" style="background:#ECE0CE;border-top:1px solid rgba(42,34,28,.08);border-bottom:1px solid rgba(42,34,28,.08);">
-    <div class="lm-wrap" style="padding:clamp(56px,8vw,120px) clamp(20px,5vw,80px);display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(32px,6vw,80px);align-items:start;">
-      <div data-reveal style="position:relative;">
+    <div class="lm-wrap" style="padding:clamp(56px,8vw,120px) clamp(20px,5vw,80px);">
+      <p data-reveal style="margin:0 0 8px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Qui je suis</p>
+      <h2 data-reveal style="margin:0 0 clamp(36px,5vw,64px);max-width:20ch;font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.02;font-size:clamp(34px,4.6vw,62px);">Des contenus qui <span style="font-style:italic;">respirent</span> et inspirent.</h2>
+      <div class="lm-about-grid" style="display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(32px,6vw,80px);align-items:start;">
+        <div data-reveal class="lm-about-media" style="position:relative;">
         <div data-slot="about" aria-label="Lire la vidéo de présentation" style="position:relative;aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#E2D3BC 0 16px,#DBCAB0 16px 32px);border:1px solid rgba(42,34,28,.12);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px -36px rgba(42,34,28,.45);">
           <div style="width:66px;height:66px;border-radius:50%;background:rgba(243,236,223,.9);display:flex;align-items:center;justify-content:center;">
             <div style="width:0;height:0;border-left:16px solid #2A241C;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;"></div>
@@ -171,9 +216,6 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <div>
-        <p data-reveal style="margin:0 0 6px;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:#9A8A70;">Qui je suis</p>
-        <h2 data-reveal style="margin:0 0 clamp(22px,3vw,40px);font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.02;font-size:clamp(34px,4.6vw,62px);">Des contenus qui <span style="font-style:italic;">respirent</span> et inspirent.</h2>
         <ul style="list-style:none;margin:0;padding:0;">
           <li data-reveal data-d="0" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.4vw,30px);align-items:baseline;padding:clamp(16px,2vw,22px) 0;border-top:1px solid rgba(42,34,28,.14);">
             <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:18px;color:#B06A45;">01</span>
@@ -425,6 +467,15 @@ var VIDEOS = {
   lifeB2: 'https://drive.google.com/file/d/1J6UdurdwlA-o4rPfJeXR3-fcgEXXPWf-/view?usp=sharing'
 };
 
+/* MINIATURES — par défaut, la miniature générée automatiquement par Google
+   Drive est utilisée pour chaque emplacement. Pour forcer une image précise
+   (ex. un screenshot uploadé dans le dossier), colle son URL ici en face du
+   slot. Laisse l'objet vide pour tout garder en automatique.
+   Ex.  corpA2: 'images/corpA2.jpg', */
+var POSTERS = {
+  // about: '', corpA1: '', corpB2: '', ...
+};
+
 (function () {
   // Accepts a raw Drive ID or any Drive share URL and returns the file ID.
   function driveId(v) {
@@ -470,6 +521,15 @@ var VIDEOS = {
     el.classList.add('has-video');
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
+
+    // Thumbnail: custom override if provided, else Drive's auto-generated frame.
+    var poster = POSTERS[slot] || ('https://drive.google.com/thumbnail?id=' + id + '&sz=w1000');
+    el.style.backgroundImage =
+      "linear-gradient(180deg, rgba(42,34,28,.05), rgba(42,34,28,.30)), url('" + poster + "')";
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'center';
+    el.style.backgroundRepeat = 'no-repeat';
+
     el.addEventListener('click', function () { openModal(id, el); });
     el.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(id, el); }
